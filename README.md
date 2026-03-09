@@ -1,36 +1,218 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CallFlow — AI Voice Support
 
-## Getting Started
+CallFlow is an **AI-powered voice customer support system** that automatically calls users and resolves order-related queries in real time using an AI voice agent.
 
-First, run the development server:
+Instead of waiting on hold or navigating complex menus, users simply enter their **phone number and order ID**, and the AI agent calls them to provide instant support.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+This project demonstrates how AI voice systems can automate customer service workflows.
+
+---
+
+# Demo Overview
+
+1. User enters their **phone number** and **order ID**
+2. The system triggers a **voice call using Bolna AI**
+3. The AI agent answers order-related queries
+4. The conversation transcript is displayed in real time
+5. Call analytics are stored and displayed in the dashboard
+
+---
+
+# Tech Stack
+
+## Frontend
+- Next.js 14  
+- TypeScript  
+- Tailwind CSS  
+
+## Backend
+- Node.js  
+- Express.js  
+
+## AI / Voice Infrastructure
+- Bolna AI (Voice Agent + Call orchestration)
+
+## Database
+- Supabase (optional)  
+- In-memory storage (default for demo)
+
+---
+
+# Features
+
+## AI Voice Calls
+Users receive a real-time call from an AI support agent powered by Bolna AI.
+
+## Order Lookup
+The agent can fetch order information for the following demo orders:
+
+```
+ORD-001
+ORD-002
+ORD-003
+ORD-004
+ORD-005
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Live Call Transcript
+The web interface displays the **conversation transcript in real time** while the call is active.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Analytics Dashboard
+Displays:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Total calls  
+- Active calls  
+- Resolved queries  
+- Call history  
+- Performance metrics  
 
-## Learn More
+## 24/7 Support
+The AI agent handles customer queries instantly with no queues.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+callflow-voice-support
+│
+├── src                # Next.js frontend
+│
+├── backend            # Express backend server
+│
+├── database           # Sample order data
+│
+├── public             # Static assets
+│
+├── package.json
+└── README.md
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Prerequisites
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Make sure you have:
+
+- Node.js 18+
+- A Bolna AI account
+- Bolna API key
+- (Optional) Supabase project
+
+---
+
+# Installation
+
+Clone the repository:
+
+```
+git clone https://github.com/Greeva48/callflow-voice-support.git
+cd callflow-voice-support
+```
+
+Install frontend dependencies:
+
+```
+npm install
+```
+
+Install backend dependencies:
+
+```
+cd backend
+npm install
+cd ..
+```
+
+---
+
+# Environment Variables
+
+Create a `.env` file in the **backend** folder.
+
+Example:
+
+```
+BOLNA_API_KEY=your_api_key_here
+PORT=5000
+```
+
+If using Supabase:
+
+```
+SUPABASE_URL=your_url
+SUPABASE_KEY=your_key
+```
+
+---
+
+# Running the Application
+
+Start the backend server:
+
+```
+cd backend
+node server.js
+```
+
+Start the frontend:
+
+```
+npm run dev
+```
+
+The app will run on:
+
+```
+http://localhost:3000
+```
+
+---
+
+# Example Workflow
+
+1. Open the web app  
+2. Enter your **phone number**  
+3. Enter an **order ID**  
+4. The AI agent will call your phone  
+5. Ask about your order status  
+6. Watch the **live transcript** update on the call page  
+
+---
+
+# Future Improvements
+
+- Multi-language AI agents  
+- CRM integration  
+- Real order database  
+- Call recordings  
+- Sentiment analysis  
+- Customer satisfaction scoring  
+
+---
+
+# Use Cases
+
+- E-commerce order support  
+- Automated customer service  
+- AI voice agents for help desks  
+- Call center automation  
+
+---
+
+# Author
+
+**Greeva Patel**
+
+Software Developer  
+AI / ML Enthusiast  
+Microsoft Learn Student Ambassador
+
+GitHub:  
+https://github.com/Greeva48
+
+---
+
+# License
+
+MIT License
