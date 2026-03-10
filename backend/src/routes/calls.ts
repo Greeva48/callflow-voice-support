@@ -82,6 +82,10 @@ router.get('/calls', async (_req: Request, res: Response) => {
     const calls = await listCalls();
     return res.json({ success: true, calls });
   } catch (err) {
+<<<<<<< HEAD
+=======
+    console.error('[GET /calls]', err);
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
     const msg = err instanceof Error ? err.message : String(err);
     return res.status(500).json({ error: msg });
   }
@@ -135,6 +139,10 @@ router.get('/stats', async (_req: Request, res: Response) => {
       total_cost: totalCost.toFixed(4),
     });
   } catch (err) {
+<<<<<<< HEAD
+=======
+    console.error('[GET /stats]', err);
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
     const msg = err instanceof Error ? err.message : String(err);
     return res.status(500).json({ error: msg });
   }

@@ -34,7 +34,11 @@ app.use((req, _res, next) => {
 app.get('/health', (_req, res) => {
   res.json({
     status: 'ok',
+<<<<<<< HEAD
     service: 'VoiceAI Support Backend',
+=======
+    service: 'CallFlow Support Backend',
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
     version: '1.0.0',
     timestamp: new Date().toISOString(),
     supabase: !!(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_KEY),
@@ -59,7 +63,11 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
 
 // ─── Start ─────────────────────────────────────────────────────────────────
 app.listen(PORT, () => {
+<<<<<<< HEAD
   console.log(`\n🚀 VoiceAI Backend running on http://localhost:${PORT}`);
+=======
+  console.log(`\n🚀 CallFlow Backend running on http://localhost:${PORT}`);
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
   console.log(`   Bolna API key: ${process.env.BOLNA_API_KEY ? '✓ configured' : '✗ missing'}`);
   console.log(`   Supabase:      ${process.env.SUPABASE_URL ? '✓ configured' : '✗ using in-memory store'}\n`);
 });

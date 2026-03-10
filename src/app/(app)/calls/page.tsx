@@ -245,7 +245,11 @@ export default function CallsPage() {
             ) : executions.length === 0 ? (
               <div style={{ padding: 48, textAlign: 'center', color: 'var(--text-muted)' }}>
                 <Phone size={32} style={{ marginBottom: 12, opacity: 0.4 }} />
+<<<<<<< HEAD
                 <div>No calls yet. Go to <a href="/leads" style={{ color: '#3b82f6' }}>Leads</a> to initiate your first call.</div>
+=======
+                <div>No calls recorded yet. Start your first AI support call to see real-time transcripts and analytics. <a href="/call" style={{ color: '#3b82f6' }}>Start a call →</a></div>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
               </div>
             ) : (
               <table className="table">

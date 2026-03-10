@@ -11,7 +11,11 @@
   "dependencies": {
     "clsx": "^2.1.1",
     "lucide-react": "^0.577.0",
+<<<<<<< HEAD
     "next": "^16.1.6",
+=======
+    "next": "14.2.35",
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
     "react": "^18",
     "react-dom": "^18",
     "recharts": "^3.8.0"

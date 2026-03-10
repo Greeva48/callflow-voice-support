@@ -39,7 +39,11 @@ function AgentCard({ agent, isActive, onSelect }: { agent: Agent; isActive: bool
           </div>
           <div>
             <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text-primary)' }}>{agent.agent_name}</div>
+<<<<<<< HEAD
             <div style={{ fontSize: 11, color: 'var(--text-muted)', fontFamily: 'monospace' }}>{agent.agent_id}</div>
+=======
+            <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Support Agent</div>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>

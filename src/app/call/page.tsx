@@ -2,7 +2,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 
+<<<<<<< HEAD
 const BACKEND = 'http://localhost:3001';
+=======
+const BACKEND = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
 
 interface Agent { id: string; agent_id?: string; agent_name: string; agent_welcome_message?: string; }
 interface CallState { status: 'idle' | 'calling' | 'connected' | 'ended' | 'failed'; callId?: string; executionId?: string; duration?: number; cost?: number; errorMsg?: string; }
@@ -23,7 +27,11 @@ function Waveform({ active }: { active: boolean }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 3, height: 64, justifyContent: 'center' }}>
       {heights.map((h, i) => (
+<<<<<<< HEAD
         <div key={i} style={{ width: 3, height: h, borderRadius: 2, background: active ? 'linear-gradient(180deg, #6C5CE7, #00D4FF)' : 'rgba(255,255,255,0.08)', transition: active ? `height ${0.08 + (i % 5) * 0.01}s ease` : 'height 0.4s ease' }} />
+=======
+        <div key={i} style={{ width: 3, height: h, borderRadius: 2, background: active ? '#6366f1' : 'rgba(255,255,255,0.08)', transition: active ? `height ${0.08 + (i % 5) * 0.01}s ease` : 'height 0.4s ease' }} />
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
       ))}
     </div>
   );
@@ -45,10 +53,17 @@ function Bubble({ role, text }: { role: 'agent' | 'user'; text: string }) {
   const isAgent = role === 'agent';
   return (
     <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', flexDirection: isAgent ? 'row' : 'row-reverse', marginBottom: 14 }}>
+<<<<<<< HEAD
       <div style={{ width: 28, height: 28, borderRadius: '50%', flexShrink: 0, background: isAgent ? 'rgba(108,92,231,0.18)' : 'rgba(0,212,255,0.12)', border: `1px solid ${isAgent ? 'rgba(108,92,231,0.35)' : 'rgba(0,212,255,0.25)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: isAgent ? '#6C5CE7' : '#00D4FF' }}>
         {isAgent ? 'AI' : 'Me'}
       </div>
       <div style={{ maxWidth: '75%', padding: '10px 14px', borderRadius: 14, fontSize: 13, lineHeight: 1.6, background: isAgent ? 'rgba(108,92,231,0.1)' : 'rgba(0,212,255,0.07)', border: `1px solid ${isAgent ? 'rgba(108,92,231,0.18)' : 'rgba(0,212,255,0.12)'}`, color: '#f8fafc', borderBottomLeftRadius: isAgent ? 4 : 14, borderBottomRightRadius: isAgent ? 14 : 4 }}>
+=======
+      <div style={{ width: 28, height: 28, borderRadius: '50%', flexShrink: 0, background: isAgent ? 'rgba(99,102,241,0.18)' : 'rgba(148,163,184,0.12)', border: `1px solid ${isAgent ? 'rgba(99,102,241,0.35)' : 'rgba(148,163,184,0.2)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: isAgent ? '#6366f1' : '#94a3b8' }}>
+        {isAgent ? 'AI' : 'Me'}
+      </div>
+      <div style={{ maxWidth: '75%', padding: '10px 14px', borderRadius: 14, fontSize: 13, lineHeight: 1.6, background: isAgent ? 'rgba(99,102,241,0.1)' : 'rgba(148,163,184,0.06)', border: `1px solid ${isAgent ? 'rgba(99,102,241,0.18)' : 'rgba(148,163,184,0.12)'}`, color: '#f8fafc', borderBottomLeftRadius: isAgent ? 4 : 14, borderBottomRightRadius: isAgent ? 14 : 4 }}>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
         {text}
       </div>
     </div>
@@ -137,7 +152,18 @@ export default function CallPage() {
       pollRef.current = setInterval(() => pollStatus(execId), 3000);
       setTimeout(() => pollStatus(execId), 5000);
     } catch (e) {
+<<<<<<< HEAD
       setCallState({ status: 'failed', errorMsg: e instanceof Error ? e.message : 'Failed to initiate call' });
+=======
+      const msg = e instanceof Error ? e.message : 'Failed to initiate call';
+      const isNetworkError = /fetch|network/i.test(msg);
+      setCallState({
+        status: 'failed',
+        errorMsg: isNetworkError
+          ? "Couldn't reach the server. Start the backend with: cd backend && npm run dev (port 3001)."
+          : msg,
+      });
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
     }
   };
 
@@ -160,10 +186,14 @@ export default function CallPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#0B0F19', color: '#f8fafc', fontFamily: '-apple-system, BlinkMacSystemFont, "Inter", sans-serif' }}>
+<<<<<<< HEAD
       <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
         <div style={{ position: 'absolute', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(108,92,231,0.11) 0%, transparent 70%)', top: '-150px', left: '-150px', filter: 'blur(60px)' }} />
         <div style={{ position: 'absolute', inset: 0, opacity: 0.02, backgroundImage: 'linear-gradient(rgba(108,92,231,1) 1px, transparent 1px), linear-gradient(90deg, rgba(108,92,231,1) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
       </div>
+=======
+      <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, background: '#0B0F19' }} />
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
 
       <div style={{ position: 'relative', zIndex: 1, maxWidth: 1100, margin: '0 auto', padding: '32px 32px 64px' }}>
 
@@ -171,11 +201,19 @@ export default function CallPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 40 }}>
           <Link href="/" style={{ fontSize: 13, fontWeight: 600, color: 'rgba(148,163,184,0.5)', textDecoration: 'none' }}>&larr; Back</Link>
           <div style={{ width: 1, height: 14, background: 'rgba(255,255,255,0.07)' }} />
+<<<<<<< HEAD
           <span style={{ fontWeight: 800, fontSize: 15, background: 'linear-gradient(135deg, #f8fafc, #a29bfe)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>AI Voice Support</span>
         </div>
 
         <div style={{ marginBottom: 36 }}>
           <h1 style={{ fontSize: 38, fontWeight: 900, letterSpacing: '-1.5px', margin: '0 0 8px', background: 'linear-gradient(135deg, #f8fafc 30%, rgba(148,163,184,0.6))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Talk to AI Support</h1>
+=======
+          <span style={{ fontWeight: 800, fontSize: 15, color: '#f8fafc' }}>AI Voice Support</span>
+        </div>
+
+        <div style={{ marginBottom: 36 }}>
+          <h1 style={{ fontSize: 38, fontWeight: 900, letterSpacing: '-1.5px', margin: '0 0 8px', color: '#f8fafc' }}>Talk to AI Support</h1>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
           <p style={{ fontSize: 15, color: 'rgba(148,163,184,0.5)', margin: 0 }}>Enter your phone number — the AI agent will call you instantly</p>
         </div>
 
@@ -186,6 +224,7 @@ export default function CallPage() {
 
             {/* Agent selector */}
             {card(<>
+<<<<<<< HEAD
               <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #6C5CE7, #00D4FF)' }} />
               <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase', color: '#6C5CE7', marginBottom: 12 }}>AI Agent</div>
               <div style={{ position: 'relative' }}>
@@ -194,14 +233,30 @@ export default function CallPage() {
                     <div style={{ width: 30, height: 30, borderRadius: 9, background: 'rgba(108,92,231,0.18)', border: '1px solid rgba(108,92,231,0.28)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 800, color: '#6C5CE7' }}>AI</div>
                     {agentsLoading ? <span style={{ color: 'rgba(148,163,184,0.45)' }}>Loading agents...</span>
                       : selectedAgent ? <div><div style={{ fontWeight: 600 }}>{selectedAgent.agent_name}</div><div style={{ fontSize: 10, color: 'rgba(148,163,184,0.4)', fontFamily: 'monospace', marginTop: 1 }}>{selectedAgent.id || selectedAgent.agent_id}</div></div>
+=======
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(255,255,255,0.06)' }} />
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase', color: '#6366f1', marginBottom: 12 }}>AI Agent</div>
+              <div style={{ position: 'relative' }}>
+                <button onClick={() => setAgentOpen(p => !p)} style={{ width: '100%', padding: '11px 14px', borderRadius: 11, background: 'rgba(255,255,255,0.04)', border: `1px solid ${agentOpen ? '#6366f1' : 'rgba(255,255,255,0.08)'}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: '#f8fafc', fontSize: 14, cursor: 'pointer', transition: 'border-color 0.2s' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <div style={{ width: 30, height: 30, borderRadius: 9, background: 'rgba(99,102,241,0.18)', border: '1px solid rgba(99,102,241,0.28)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 800, color: '#6366f1' }}>AI</div>
+                    {agentsLoading ? <span style={{ color: 'rgba(148,163,184,0.45)' }}>Loading agents...</span>
+                      : selectedAgent ? <div><div style={{ fontWeight: 600 }}>{selectedAgent.agent_name}</div><div style={{ fontSize: 10, color: 'rgba(148,163,184,0.4)', marginTop: 1 }}>Support Agent</div></div>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
                       : <span style={{ color: 'rgba(148,163,184,0.45)' }}>Select agent</span>}
                   </div>
                   <span style={{ color: 'rgba(148,163,184,0.4)', fontSize: 12, transform: agentOpen ? 'rotate(180deg)' : 'none', display: 'inline-block', transition: 'transform 0.2s' }}>&#9650;</span>
                 </button>
                 {agentOpen && agents.length > 0 && (
+<<<<<<< HEAD
                   <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 50, marginTop: 4, borderRadius: 12, background: 'rgba(11,15,25,0.98)', border: '1px solid rgba(108,92,231,0.22)', backdropFilter: 'blur(20px)', boxShadow: '0 16px 48px rgba(0,0,0,0.6)', overflow: 'hidden' }}>
                     {agents.map(a => (
                       <button key={a.id || a.agent_id} onClick={() => { setSelectedAgent(a); setAgentOpen(false); }} style={{ width: '100%', padding: '11px 14px', background: (selectedAgent?.id || selectedAgent?.agent_id) === (a.id || a.agent_id) ? 'rgba(108,92,231,0.1)' : 'transparent', border: 'none', borderBottom: '1px solid rgba(255,255,255,0.04)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10, color: '#f8fafc', textAlign: 'left', fontSize: 13 }}>
+=======
+                  <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 50, marginTop: 4, borderRadius: 12, background: 'rgba(11,15,25,0.98)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(20px)', boxShadow: '0 8px 24px rgba(0,0,0,0.4)', overflow: 'hidden' }}>
+                    {agents.map(a => (
+                      <button key={a.id || a.agent_id} onClick={() => { setSelectedAgent(a); setAgentOpen(false); }} style={{ width: '100%', padding: '11px 14px', background: (selectedAgent?.id || selectedAgent?.agent_id) === (a.id || a.agent_id) ? 'rgba(99,102,241,0.1)' : 'transparent', border: 'none', borderBottom: '1px solid rgba(255,255,255,0.04)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10, color: '#f8fafc', textAlign: 'left', fontSize: 13 }}>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
                         <span style={{ fontWeight: 600 }}>{a.agent_name}</span>
                         {(selectedAgent?.id || selectedAgent?.agent_id) === (a.id || a.agent_id) && <span style={{ marginLeft: 'auto', color: '#00b894', fontSize: 14 }}>&#10003;</span>}
                       </button>
@@ -210,7 +265,11 @@ export default function CallPage() {
                 )}
               </div>
               {selectedAgent?.agent_welcome_message && (
+<<<<<<< HEAD
                 <div style={{ marginTop: 12, padding: '10px 12px', background: 'rgba(108,92,231,0.06)', borderRadius: 10, border: '1px solid rgba(108,92,231,0.14)', fontSize: 12, color: 'rgba(148,163,184,0.6)', lineHeight: 1.7, fontStyle: 'italic' }}>
+=======
+                <div style={{ marginTop: 12, padding: '10px 12px', background: 'rgba(99,102,241,0.06)', borderRadius: 10, border: '1px solid rgba(99,102,241,0.14)', fontSize: 12, color: 'rgba(148,163,184,0.6)', lineHeight: 1.7, fontStyle: 'italic' }}>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
                   &ldquo;{selectedAgent.agent_welcome_message}&rdquo;
                 </div>
               )}
@@ -218,12 +277,21 @@ export default function CallPage() {
 
             {/* Inputs */}
             {card(<>
+<<<<<<< HEAD
               <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #00D4FF, #6C5CE7)' }} />
               <div style={{ marginBottom: 16 }}>
                 <label style={{ display: 'block', fontSize: 10, fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase', color: '#00D4FF', marginBottom: 8 }}>Your Phone Number</label>
                 <input value={phone} onChange={e => setPhone(e.target.value)} disabled={isActive} placeholder="+91 98765 43210"
                   style={{ width: '100%', padding: '11px 14px', borderRadius: 10, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#f8fafc', fontSize: 14, outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s' }}
                   onFocus={e => (e.target as HTMLInputElement).style.borderColor = '#6C5CE7'}
+=======
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(255,255,255,0.06)' }} />
+              <div style={{ marginBottom: 16 }}>
+                <label style={{ display: 'block', fontSize: 10, fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase', color: '#6366f1', marginBottom: 8 }}>Your Phone Number</label>
+                <input value={phone} onChange={e => setPhone(e.target.value)} disabled={isActive} placeholder="+91 98765 43210"
+                  style={{ width: '100%', padding: '11px 14px', borderRadius: 10, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#f8fafc', fontSize: 14, outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s' }}
+                  onFocus={e => (e.target as HTMLInputElement).style.borderColor = '#6366f1'}
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
                   onBlur={e => (e.target as HTMLInputElement).style.borderColor = 'rgba(255,255,255,0.08)'}
                 />
                 <div style={{ fontSize: 11, color: 'rgba(148,163,184,0.38)', marginTop: 5 }}>The AI agent will call this number.</div>
@@ -232,7 +300,11 @@ export default function CallPage() {
                 <label style={{ display: 'block', fontSize: 10, fontWeight: 700, letterSpacing: '0.09em', textTransform: 'uppercase', color: 'rgba(148,163,184,0.45)', marginBottom: 8 }}>Order ID <span style={{ fontWeight: 400, textTransform: 'none', fontSize: 10 }}>(optional)</span></label>
                 <input value={orderId} onChange={e => setOrderId(e.target.value)} disabled={isActive} placeholder="ORD-001"
                   style={{ width: '100%', padding: '11px 14px', borderRadius: 10, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#f8fafc', fontSize: 14, outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s' }}
+<<<<<<< HEAD
                   onFocus={e => (e.target as HTMLInputElement).style.borderColor = '#00D4FF'}
+=======
+                  onFocus={e => (e.target as HTMLInputElement).style.borderColor = '#6366f1'}
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
                   onBlur={e => (e.target as HTMLInputElement).style.borderColor = 'rgba(255,255,255,0.08)'}
                 />
                 <div style={{ fontSize: 11, color: 'rgba(148,163,184,0.38)', marginTop: 5 }}>Try: ORD-001 through ORD-005</div>
@@ -245,7 +317,11 @@ export default function CallPage() {
             {/* Call control */}
             {card(<>
               {callState.status === 'idle' && (
+<<<<<<< HEAD
                 <button onClick={startCall} disabled={!phone.trim()} style={{ width: '100%', padding: '15px', borderRadius: 13, border: 'none', cursor: phone.trim() ? 'pointer' : 'not-allowed', background: phone.trim() ? 'linear-gradient(135deg, #6C5CE7, #00D4FF)' : 'rgba(108,92,231,0.25)', color: 'white', fontSize: 16, fontWeight: 800, boxShadow: phone.trim() ? '0 0 30px rgba(108,92,231,0.5)' : 'none', transition: 'all 0.2s' }}>
+=======
+                <button onClick={startCall} disabled={!phone.trim()} style={{ width: '100%', padding: '15px', borderRadius: 13, border: 'none', cursor: phone.trim() ? 'pointer' : 'not-allowed', background: phone.trim() ? '#6366f1' : 'rgba(99,102,241,0.35)', color: 'white', fontSize: 16, fontWeight: 700, boxShadow: phone.trim() ? '0 4px 12px rgba(0,0,0,0.2)' : 'none', transition: 'all 0.2s' }}>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
                   Call Me Now
                 </button>
               )}
@@ -281,7 +357,11 @@ export default function CallPage() {
                   <div style={{ fontSize: 18, fontWeight: 800, color: '#00b894', marginBottom: 6 }}>Call Completed</div>
                   {callState.duration && <div style={{ fontSize: 13, color: 'rgba(148,163,184,0.5)', marginBottom: 4 }}>{Math.floor(callState.duration / 60)}m {callState.duration % 60}s</div>}
                   {callState.cost !== undefined && <div style={{ fontSize: 12, color: 'rgba(148,163,184,0.4)', marginBottom: 20 }}>Cost: ${callState.cost.toFixed(4)}</div>}
+<<<<<<< HEAD
                   <button onClick={reset} style={{ width: '100%', padding: '12px', borderRadius: 12, border: 'none', background: 'linear-gradient(135deg, #6C5CE7, #00D4FF)', color: 'white', cursor: 'pointer', fontWeight: 700, fontSize: 14 }}>New Call</button>
+=======
+                  <button onClick={reset} style={{ width: '100%', padding: '12px', borderRadius: 12, border: 'none', background: '#6366f1', color: 'white', cursor: 'pointer', fontWeight: 700, fontSize: 14, boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>New Call</button>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
                 </div>
               )}
 
@@ -317,7 +397,11 @@ export default function CallPage() {
 
           {/* Right — transcript */}
           <div style={{ borderRadius: 18, background: 'rgba(20,26,42,0.7)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(20px)', overflow: 'hidden', display: 'flex', flexDirection: 'column', minHeight: 560, position: 'relative' }}>
+<<<<<<< HEAD
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #6C5CE7, #00D4FF, #00b894)' }} />
+=======
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(255,255,255,0.06)' }} />
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
             <div style={{ padding: '18px 22px', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: 8 }}>
               <span style={{ fontSize: 14, fontWeight: 700, color: '#f8fafc' }}>Live Transcript</span>
               {isActive && (
@@ -348,7 +432,11 @@ export default function CallPage() {
             </div>
             <div style={{ padding: '12px 22px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, background: 'rgba(11,15,25,0.4)' }}>
               {isActive ? (
+<<<<<<< HEAD
                 <><span style={{ color: '#00b894' }}>&#9679;</span><span style={{ color: '#00b894' }}>Connected — {selectedAgent?.agent_name}</span><span style={{ marginLeft: 'auto', color: 'rgba(148,163,184,0.3)' }}>Polling every 3s</span></>
+=======
+                <><span style={{ color: '#00b894' }}>&#9679;</span><span style={{ color: '#00b894' }}>Connected — {selectedAgent?.agent_name}</span></>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
               ) : callState.status === 'ended' ? (
                 <span style={{ color: 'rgba(148,163,184,0.4)' }}>Call ended — {transcriptLines.length} lines</span>
               ) : (

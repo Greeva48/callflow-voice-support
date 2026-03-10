@@ -2,7 +2,11 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
+<<<<<<< HEAD
   title: 'CallFlow — AI Customer Support Calls',
+=======
+  title: 'CallFlow — AI Voice Support Platform',
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
   description: 'AI-powered voice customer support platform built on Bolna AI',
   icons: {
     icon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>",

@@ -53,7 +53,11 @@ export default function Sidebar() {
               background: 'linear-gradient(135deg, #f8fafc, #94a3b8)',
               WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
             }}>
+<<<<<<< HEAD
               CallFlow
+=======
+              LeadIQ
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
             </div>
             <div style={{ fontSize: 10, color: 'rgba(148,163,184,0.6)', marginTop: 0, letterSpacing: '0.02em' }}>
               powered by Bolna AI

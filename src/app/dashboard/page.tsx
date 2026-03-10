@@ -6,7 +6,11 @@ import {
   Tooltip, ResponsiveContainer, Cell,
 } from 'recharts';
 
+<<<<<<< HEAD
 const BACKEND = 'http://localhost:3001';
+=======
+const BACKEND = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
 
 interface CallRecord {
   id: string;
@@ -62,7 +66,11 @@ function fmtTime(iso: string) {
 const DarkTip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   return (
+<<<<<<< HEAD
     <div style={{ background: 'rgba(11,15,25,0.98)', border: '1px solid rgba(108,92,231,0.3)', borderRadius: 10, padding: '10px 14px', fontSize: 12, backdropFilter: 'blur(20px)' }}>
+=======
+    <div style={{ background: 'rgba(11,15,25,0.98)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, padding: '10px 14px', fontSize: 12, backdropFilter: 'blur(20px)' }}>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
       {label && <div style={{ color: 'rgba(148,163,184,0.6)', marginBottom: 6 }}>{label}</div>}
       {payload.map((p: { name: string; value: number; color: string }) => (
         <div key={p.name} style={{ color: p.color, fontWeight: 700 }}>{p.name}: {p.value}</div>
@@ -81,23 +89,40 @@ function KPI({ label, value, sub, icon, from, to, loading }: {
     <div onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)} style={{
       padding: '22px 22px 18px', borderRadius: 18, position: 'relative', overflow: 'hidden',
       background: hov ? 'rgba(20,26,42,0.95)' : 'rgba(20,26,42,0.6)',
+<<<<<<< HEAD
       border: `1px solid ${hov ? from + '44' : 'rgba(255,255,255,0.06)'}`,
       backdropFilter: 'blur(20px)', transition: 'all 0.2s',
       transform: hov ? 'translateY(-2px)' : 'none',
       boxShadow: hov ? `0 16px 48px rgba(0,0,0,0.4), 0 0 32px ${from}22` : '0 4px 16px rgba(0,0,0,0.2)',
     }}>
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${from}, ${to})` }} />
+=======
+      border: '1px solid rgba(255,255,255,0.08)',
+      backdropFilter: 'blur(20px)', transition: 'all 0.2s',
+      transform: hov ? 'translateY(-2px)' : 'none',
+      boxShadow: hov ? '0 8px 24px rgba(0,0,0,0.25)' : '0 1px 3px rgba(0,0,0,0.12)',
+    }}>
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(255,255,255,0.06)' }} />
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
           <div style={{ fontSize: 11, color: 'rgba(148,163,184,0.5)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 10 }}>{label}</div>
           {loading ? (
             <div style={{ width: 80, height: 32, borderRadius: 6, background: 'rgba(255,255,255,0.06)', animation: 'pulse 1.5s ease-in-out infinite' }} />
           ) : (
+<<<<<<< HEAD
             <div style={{ fontSize: 34, fontWeight: 900, letterSpacing: '-1.5px', background: `linear-gradient(135deg, #f8fafc, ${from})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{value}</div>
           )}
           <div style={{ fontSize: 12, color: 'rgba(148,163,184,0.4)', marginTop: 4 }}>{sub}</div>
         </div>
         <div style={{ width: 44, height: 44, borderRadius: 13, background: `linear-gradient(135deg, ${from}20, ${to}10)`, border: `1px solid ${from}30`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: from, boxShadow: hov ? `0 0 16px ${from}44` : 'none', transition: 'box-shadow 0.2s', flexShrink: 0 }}>
+=======
+            <div style={{ fontSize: 34, fontWeight: 900, letterSpacing: '-1.5px', color: '#f8fafc' }}>{value}</div>
+          )}
+          <div style={{ fontSize: 12, color: 'rgba(148,163,184,0.4)', marginTop: 4 }}>{sub}</div>
+        </div>
+        <div style={{ width: 44, height: 44, borderRadius: 13, background: `${from}14`, border: `1px solid ${from}28`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: from, flexShrink: 0 }}>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
           {icon}
         </div>
       </div>
@@ -162,6 +187,7 @@ export default function DashboardPage() {
   const [refreshing, setRefreshing] = useState(false);
   const [search, setSearch] = useState('');
   const [expanded, setExpanded] = useState<string | null>(null);
+<<<<<<< HEAD
 
   const fetchData = useCallback(async (showRefresh = false) => {
     if (showRefresh) setRefreshing(true);
@@ -174,6 +200,33 @@ export default function DashboardPage() {
       setStats(statsRes);
     } catch { /* backend offline */ }
     finally { setLoading(false); setRefreshing(false); }
+=======
+  const [backendError, setBackendError] = useState<string | null>(null);
+
+  const fetchData = useCallback(async (showRefresh = false) => {
+    if (showRefresh) setRefreshing(true);
+    setBackendError(null);
+    try {
+      const callsRes = await fetch(`${BACKEND}/calls`);
+      const statsRes = await fetch(`${BACKEND}/stats`);
+      if (!callsRes.ok || !statsRes.ok) {
+        setBackendError('Couldn\'t load calls. Is the backend running on port 3001?');
+        setCalls([]);
+        setStats(null);
+        return;
+      }
+      const [callsData, statsData] = await Promise.all([callsRes.json(), statsRes.json()]);
+      setCalls(callsData.calls || []);
+      setStats(statsData);
+    } catch {
+      setBackendError('Couldn\'t load calls. Is the backend running on port 3001?');
+      setCalls([]);
+      setStats(null);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
   }, []);
 
   useEffect(() => { fetchData(); }, [fetchData]);
@@ -220,23 +273,40 @@ export default function DashboardPage() {
               ← Home
             </Link>
             <div style={{ width: 1, height: 14, background: 'rgba(255,255,255,0.08)' }} />
+<<<<<<< HEAD
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{ width: 28, height: 28, borderRadius: 8, background: 'linear-gradient(135deg, #6C5CE7, #00D4FF)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 900, color: 'white' }}>
                 ◈
               </div>
               <span style={{ fontWeight: 800, fontSize: 16 }}>Analytics Dashboard</span>
             </div>
+=======
+            <span style={{ fontWeight: 800, fontSize: 16 }}>Analytics Dashboard</span>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
             <button onClick={() => fetchData(true)} disabled={refreshing} style={{ padding: '8px 14px', borderRadius: 9, border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.04)', color: 'rgba(148,163,184,0.7)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontSize: 13 }}>
               <span style={{ display: 'inline-block', animation: refreshing ? 'spin 1s linear infinite' : 'none' }}>↻</span> Refresh
             </button>
+<<<<<<< HEAD
             <Link href="/call" style={{ padding: '8px 18px', borderRadius: 9, background: 'linear-gradient(135deg, #6C5CE7, #00D4FF)', color: 'white', textDecoration: 'none', fontSize: 13, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
+=======
+            <Link href="/call" style={{ padding: '8px 18px', borderRadius: 9, background: '#6366f1', color: 'white', textDecoration: 'none', fontSize: 13, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6, boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
               ☎ New Call
             </Link>
           </div>
         </div>
 
+<<<<<<< HEAD
+=======
+        {backendError && (
+          <div style={{ marginBottom: 20, padding: '12px 16px', borderRadius: 10, background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.25)', color: 'rgba(248,113,113,0.95)', fontSize: 14 }}>
+            {backendError}
+          </div>
+        )}
+
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
         {/* KPIs */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 28 }}>
           <KPI label="Total Calls" value={stats?.total_calls ?? '—'} sub="All time" icon={<span style={{ fontSize: 18 }}>☎</span>} from="#6C5CE7" to="#a29bfe" loading={loading} />
@@ -249,40 +319,67 @@ export default function DashboardPage() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 280px', gap: 20, marginBottom: 28 }}>
 
           {/* Area chart */}
+<<<<<<< HEAD
           <div style={{ padding: 22, borderRadius: 18, background: 'rgba(20,26,42,0.6)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(20px)', position: 'relative', overflow: 'hidden' }}>
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #6C5CE7, #00D4FF)' }} />
+=======
+          <div style={{ padding: 22, borderRadius: 18, background: 'rgba(20,26,42,0.6)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(20px)', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(255,255,255,0.06)' }} />
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
             <div style={{ fontSize: 14, fontWeight: 700, color: '#f8fafc', marginBottom: 4 }}>Call Volume</div>
             <div style={{ fontSize: 12, color: 'rgba(148,163,184,0.4)', marginBottom: 18 }}>Weekly calls & completions</div>
             <ResponsiveContainer width="100%" height={180}>
               <AreaChart data={weeklyData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+<<<<<<< HEAD
                     <stop offset="5%" stopColor="#6C5CE7" stopOpacity={0.3} />
                     <stop offset="95%" stopColor="#6C5CE7" stopOpacity={0} />
+=======
+                    <stop offset="5%" stopColor="#6366f1" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
                   </linearGradient>
                   <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#00b894" stopOpacity={0.25} />
                     <stop offset="95%" stopColor="#00b894" stopOpacity={0} />
                   </linearGradient>
                 </defs>
+<<<<<<< HEAD
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(108,92,231,0.07)" />
                 <XAxis dataKey="day" tick={{ fill: 'rgba(148,163,184,0.4)', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: 'rgba(148,163,184,0.4)', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip content={<DarkTip />} />
                 <Area type="monotone" dataKey="calls" name="Calls" stroke="#6C5CE7" fill="url(#g1)" strokeWidth={2.5} dot={false} />
+=======
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                <XAxis dataKey="day" tick={{ fill: 'rgba(148,163,184,0.4)', fontSize: 11 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: 'rgba(148,163,184,0.4)', fontSize: 11 }} axisLine={false} tickLine={false} />
+                <Tooltip content={<DarkTip />} />
+                <Area type="monotone" dataKey="calls" name="Calls" stroke="#6366f1" fill="url(#g1)" strokeWidth={2.5} dot={false} />
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
                 <Area type="monotone" dataKey="completed" name="Completed" stroke="#00b894" fill="url(#g2)" strokeWidth={2.5} dot={false} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
 
           {/* Bar chart */}
+<<<<<<< HEAD
           <div style={{ padding: 22, borderRadius: 18, background: 'rgba(20,26,42,0.6)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(20px)', position: 'relative', overflow: 'hidden' }}>
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #00b894, #fdcb6e, #e17055)' }} />
+=======
+          <div style={{ padding: 22, borderRadius: 18, background: 'rgba(20,26,42,0.6)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(20px)', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(255,255,255,0.06)' }} />
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
             <div style={{ fontSize: 14, fontWeight: 700, color: '#f8fafc', marginBottom: 4 }}>Outcome Distribution</div>
             <div style={{ fontSize: 12, color: 'rgba(148,163,184,0.4)', marginBottom: 18 }}>Call result breakdown</div>
             <ResponsiveContainer width="100%" height={180}>
               <BarChart data={statusDist} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+<<<<<<< HEAD
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(108,92,231,0.07)" />
+=======
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
                 <XAxis dataKey="name" tick={{ fill: 'rgba(148,163,184,0.4)', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: 'rgba(148,163,184,0.4)', fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip content={<DarkTip />} />
@@ -298,13 +395,22 @@ export default function DashboardPage() {
         </div>
 
         {/* Call log table */}
+<<<<<<< HEAD
         <div style={{ borderRadius: 18, background: 'rgba(20,26,42,0.6)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(20px)', overflow: 'hidden', position: 'relative' }}>
           <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, #6C5CE7, #00D4FF, #00b894)' }} />
+=======
+        <div style={{ borderRadius: 18, background: 'rgba(20,26,42,0.6)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(20px)', overflow: 'hidden', position: 'relative' }}>
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'rgba(255,255,255,0.06)' }} />
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
 
           {/* Table header */}
           <div style={{ padding: '18px 24px', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+<<<<<<< HEAD
               <span style={{ color: '#6C5CE7', fontSize: 15 }}>▦</span>
+=======
+              <span style={{ color: '#6366f1', fontSize: 15 }}>▦</span>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
               <span style={{ fontSize: 14, fontWeight: 700, color: '#f8fafc' }}>Call Log</span>
               <span style={{ fontSize: 11, color: 'rgba(148,163,184,0.4)', background: 'rgba(255,255,255,0.04)', padding: '2px 8px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.06)' }}>
                 {filtered.length} records
@@ -332,7 +438,11 @@ export default function DashboardPage() {
             <div style={{ padding: '48px 24px', textAlign: 'center', color: 'rgba(148,163,184,0.3)' }}>
               <div style={{ fontSize: 32, marginBottom: 12, opacity: 0.3 }}>☎</div>
               <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 6 }}>No calls recorded yet.</div>
+<<<<<<< HEAD
               <div style={{ fontSize: 13, maxWidth: 320, margin: '6px auto 12px', lineHeight: 1.6 }}>Start your first AI support call to see real-time transcripts and analytics.</div>
+=======
+              <div style={{ fontSize: 13, color: 'rgba(148,163,184,0.5)', marginBottom: 10 }}>Start your first AI support call to see real-time transcripts and analytics.</div>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
               <Link href="/call" style={{ color: '#6C5CE7', textDecoration: 'none', fontSize: 13, display: 'inline-flex', alignItems: 'center', gap: 4 }}>Start a call →</Link>
             </div>
           ) : (

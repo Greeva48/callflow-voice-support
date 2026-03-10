@@ -1,5 +1,9 @@
 -- ============================================================
+<<<<<<< HEAD
 -- VoiceAI Support — Supabase Schema
+=======
+-- CallFlow Support — Supabase Schema
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
 -- Run this in the Supabase SQL Editor
 -- ============================================================
 

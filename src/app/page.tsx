@@ -1,7 +1,14 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
+<<<<<<< HEAD
 
+=======
+import { BarChart2, Phone, Package, Brain, Lock, Globe } from 'lucide-react';
+
+const PRIMARY = '#6366f1';
+
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
 function CountUp({ end, suffix = '', duration = 2000 }: { end: number; suffix?: string; duration?: number }) {
   const [val, setVal] = useState(0);
   const started = useRef(false);
@@ -37,8 +44,13 @@ interface RecentCall {
   order_id: string | null; created_at: string;
 }
 
+<<<<<<< HEAD
 function FeatureCard({ emoji, title, description, accent }: {
   emoji: string; title: string; description: string; accent: string;
+=======
+function FeatureCard({ icon, title, description, accent }: {
+  icon: React.ReactNode; title: string; description: string; accent: string;
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
 }) {
   const [hov, setHov] = useState(false);
   return (
@@ -48,6 +60,7 @@ function FeatureCard({ emoji, title, description, accent }: {
       style={{
         padding: '28px 26px', borderRadius: 18, cursor: 'default',
         background: hov ? 'rgba(20,26,42,0.95)' : 'rgba(20,26,42,0.6)',
+<<<<<<< HEAD
         border: `1px solid ${hov ? accent + '44' : 'rgba(255,255,255,0.06)'}`,
         backdropFilter: 'blur(20px)', transition: 'all 0.25s',
         transform: hov ? 'translateY(-4px)' : 'none',
@@ -57,45 +70,92 @@ function FeatureCard({ emoji, title, description, accent }: {
     >
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, transparent, ${accent}, transparent)`, opacity: hov ? 1 : 0.4, transition: 'opacity 0.25s' }} />
       <div style={{ fontSize: 28, marginBottom: 18, lineHeight: 1 }}>{emoji}</div>
+=======
+        border: '1px solid rgba(255,255,255,0.08)',
+        backdropFilter: 'blur(20px)', transition: 'all 0.25s',
+        transform: hov ? 'translateY(-2px)' : 'none',
+        boxShadow: hov ? '0 8px 24px rgba(0,0,0,0.25)' : '0 1px 3px rgba(0,0,0,0.12)',
+        position: 'relative', overflow: 'hidden',
+      }}
+    >
+      <div style={{ marginBottom: 18, display: 'flex', alignItems: 'center' }}>{icon}</div>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
       <h3 style={{ fontSize: 17, fontWeight: 700, color: '#f8fafc', margin: '0 0 10px', letterSpacing: '-0.3px' }}>{title}</h3>
       <p style={{ fontSize: 14, color: 'rgba(148,163,184,0.65)', margin: 0, lineHeight: 1.7 }}>{description}</p>
     </div>
   );
 }
 
+<<<<<<< HEAD
 export default function LandingPage() {
   const [recentCalls, setRecentCalls] = useState<RecentCall[]>([]);
 
   useEffect(() => {
     fetch('http://localhost:3001/calls')
       .then(r => r.json()).then(d => setRecentCalls((d.calls || []).slice(0, 5))).catch(() => {});
+=======
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
+export default function LandingPage() {
+  const [recentCalls, setRecentCalls] = useState<RecentCall[]>([]);
+  const [fetchCallsError, setFetchCallsError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setFetchCallsError(null);
+    fetch(`${API_URL}/calls`)
+      .then(r => {
+        if (!r.ok) {
+          return r.json().then((d: { error?: string }) => {
+            setFetchCallsError(d?.error || 'Couldn\'t load recent calls');
+            setRecentCalls([]);
+          }).catch(() => { setFetchCallsError('Couldn\'t load recent calls'); setRecentCalls([]); });
+        }
+        return r.json().then((d: { calls?: RecentCall[] }) => setRecentCalls((d?.calls || []).slice(0, 5)));
+      })
+      .catch(() => { setFetchCallsError('Couldn\'t load recent calls'); setRecentCalls([]); });
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
   }, []);
 
   return (
     <div style={{ minHeight: '100vh', background: '#0B0F19', color: '#f8fafc', fontFamily: '-apple-system, BlinkMacSystemFont, "Inter", sans-serif', position: 'relative', overflowX: 'hidden' }}>
 
+<<<<<<< HEAD
       {/* Background */}
       <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
         <div style={{ position: 'absolute', width: 700, height: 700, borderRadius: '50%', background: 'radial-gradient(circle, rgba(108,92,231,0.13) 0%, transparent 70%)', top: '-250px', left: '-250px', filter: 'blur(60px)' }} />
         <div style={{ position: 'absolute', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%)', bottom: '-150px', right: '-150px', filter: 'blur(80px)' }} />
         <div style={{ position: 'absolute', inset: 0, opacity: 0.025, backgroundImage: 'linear-gradient(rgba(108,92,231,1) 1px, transparent 1px), linear-gradient(90deg, rgba(108,92,231,1) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
       </div>
+=======
+      {/* Background — flat, no orbs or grid */}
+      <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, background: '#0B0F19' }} />
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
 
       <div style={{ position: 'relative', zIndex: 1 }}>
 
         {/* Nav */}
+<<<<<<< HEAD
         <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 48px', borderBottom: '1px solid rgba(255,255,255,0.04)', backdropFilter: 'blur(24px)', background: 'rgba(11,15,25,0.85)', position: 'sticky', top: 0, zIndex: 100 }}>
           <span style={{ fontWeight: 900, fontSize: 20, letterSpacing: '-0.5px', background: 'linear-gradient(135deg, #f8fafc, #a29bfe)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+=======
+        <nav style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 48px', borderBottom: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(24px)', background: 'rgba(11,15,25,0.9)', position: 'sticky', top: 0, zIndex: 100 }}>
+          <span style={{ fontWeight: 900, fontSize: 20, letterSpacing: '-0.5px', color: '#f8fafc' }}>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
             CallFlow
           </span>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <Link href="/dashboard" style={{ padding: '8px 16px', borderRadius: 9, fontSize: 13, fontWeight: 600, color: 'rgba(148,163,184,0.75)', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.03)' }}>Dashboard</Link>
+<<<<<<< HEAD
             <Link href="/call" style={{ padding: '9px 20px', borderRadius: 9, fontSize: 13, fontWeight: 700, background: 'linear-gradient(135deg, #6C5CE7, #00D4FF)', color: 'white', textDecoration: 'none', boxShadow: '0 0 22px rgba(108,92,231,0.4)' }}>Talk to AI</Link>
+=======
+            <Link href="/call" style={{ padding: '9px 20px', borderRadius: 9, fontSize: 13, fontWeight: 700, background: PRIMARY, color: 'white', textDecoration: 'none', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>Talk to AI</Link>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
           </div>
         </nav>
 
         {/* Hero */}
         <section style={{ padding: '110px 48px 80px', maxWidth: 1100, margin: '0 auto', textAlign: 'center' }}>
+<<<<<<< HEAD
           <div style={{ display: 'inline-block', padding: '5px 16px', borderRadius: 100, background: 'rgba(108,92,231,0.1)', border: '1px solid rgba(108,92,231,0.28)', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#a29bfe', marginBottom: 36 }}>
             Powered by Bolna AI Voice Technology
           </div>
@@ -107,10 +167,24 @@ export default function LandingPage() {
 
           <p style={{ fontSize: 'clamp(16px, 2vw, 20px)', color: 'rgba(148,163,184,0.65)', maxWidth: 540, margin: '0 auto 52px', lineHeight: 1.85 }}>
             Instant AI-powered voice calls to check order status, resolve issues, and get real-time support — 24/7, no hold music, no frustration.
+=======
+          <div style={{ display: 'inline-block', padding: '5px 16px', borderRadius: 100, background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#818cf8', marginBottom: 36 }}>
+            Powered by Bolna AI Voice Technology
+          </div>
+
+          <h1 style={{ fontSize: 'clamp(44px, 6.5vw, 76px)', fontWeight: 900, letterSpacing: '-3px', lineHeight: 1.03, margin: '0 0 28px', color: '#f8fafc' }}>
+            AI Customer Support Calls<br />
+            <span style={{ color: '#e2e8f0' }}>Resolve Order Issues Instantly</span>
+          </h1>
+
+          <p style={{ fontSize: 'clamp(16px, 2vw, 20px)', color: 'rgba(148,163,184,0.65)', maxWidth: 540, margin: '0 auto 52px', lineHeight: 1.85 }}>
+            Instant AI-powered voice calls to resolve order issues and get real-time support — 24/7, no hold music, no frustration.
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
           </p>
 
           <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/call"
+<<<<<<< HEAD
               style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '16px 36px', borderRadius: 14, fontSize: 16, fontWeight: 800, background: 'linear-gradient(135deg, #6C5CE7, #00D4FF)', color: 'white', textDecoration: 'none', boxShadow: '0 0 40px rgba(108,92,231,0.5), 0 8px 32px rgba(0,0,0,0.3)', transition: 'all 0.2s' }}
               onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 0 60px rgba(108,92,231,0.65), 0 14px 40px rgba(0,0,0,0.4)'; }}
               onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = 'none'; (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 0 40px rgba(108,92,231,0.5), 0 8px 32px rgba(0,0,0,0.3)'; }}
@@ -118,6 +192,15 @@ export default function LandingPage() {
               Start AI Call &rarr;
             </Link>
             <Link href="/dashboard" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '16px 28px', borderRadius: 14, fontSize: 16, fontWeight: 600, color: 'rgba(148,163,184,0.85)', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(20,26,42,0.5)', backdropFilter: 'blur(20px)' }}>
+=======
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '16px 36px', borderRadius: 14, fontSize: 16, fontWeight: 700, background: PRIMARY, color: 'white', textDecoration: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.2)', transition: 'all 0.2s' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = 'none'; (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)'; }}
+            >
+              Start AI Call &rarr;
+            </Link>
+            <Link href="/dashboard" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '16px 28px', borderRadius: 14, fontSize: 16, fontWeight: 600, color: 'rgba(148,163,184,0.85)', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.03)' }}>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
               View Dashboard
             </Link>
           </div>
@@ -138,10 +221,17 @@ export default function LandingPage() {
               { label: 'Calls Processed', value: <><CountUp end={142} /></> },
               { label: 'Avg Response Time', value: '1.8s' },
               { label: 'Resolution Rate', value: <><CountUp end={91} suffix="%" /></> },
+<<<<<<< HEAD
               { label: 'Satisfaction Score', value: <><CountUp end={487} suffix="/500" /></> },
               { label: 'Uptime', value: '99.9%' },
             ].map(({ label, value }) => (
               <div key={label} style={{ padding: '16px 20px', borderRadius: 12, background: 'rgba(20,26,42,0.8)', border: '1px solid rgba(108,92,231,0.15)', backdropFilter: 'blur(20px)' }}>
+=======
+              { label: 'Satisfaction Score', value: <><CountUp end={498} suffix="/500" /></> },
+              { label: 'Uptime', value: '99.9%' },
+            ].map(({ label, value }) => (
+              <div key={label} style={{ padding: '16px 20px', borderRadius: 12, background: 'rgba(20,26,42,0.8)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(20px)' }}>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
                 <div style={{ fontSize: 22, fontWeight: 900, color: '#f8fafc', letterSpacing: '-0.5px', marginBottom: 4 }}>{value}</div>
                 <div style={{ fontSize: 11, color: 'rgba(148,163,184,0.55)' }}>{label}</div>
               </div>
@@ -149,21 +239,44 @@ export default function LandingPage() {
           </div>
         </section>
 
+<<<<<<< HEAD
         {/* Features */}
         <section style={{ padding: '88px 48px', maxWidth: 1100, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 60 }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6C5CE7', marginBottom: 16 }}>CAPABILITIES</div>
             <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 900, letterSpacing: '-1.5px', margin: 0, background: 'linear-gradient(135deg, #f8fafc 30%, rgba(148,163,184,0.6))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+=======
+        {fetchCallsError && (
+          <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 48px 16px', textAlign: 'center' }}>
+            <span style={{ fontSize: 13, color: 'rgba(248,113,113,0.95)' }}>{fetchCallsError}</span>
+          </div>
+        )}
+
+        {/* Features */}
+        <section style={{ padding: '88px 48px', maxWidth: 1100, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: 60 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: PRIMARY, marginBottom: 16 }}>CAPABILITIES</div>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 900, letterSpacing: '-1.5px', margin: 0, color: '#f8fafc' }}>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
               Enterprise-grade voice AI<br />for customer support
             </h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 20 }}>
+<<<<<<< HEAD
             <FeatureCard emoji="📞" accent="#6C5CE7" title="Real Voice Calls" description="AI agent calls your customer's phone number directly. No apps, no browsers — just a natural phone conversation powered by Bolna AI." />
             <FeatureCard emoji="📦" accent="#00D4FF" title="Live Order Tracking" description="The agent collects an order ID and instantly queries your database, delivering accurate status updates in real time during the call." />
             <FeatureCard emoji="🧠" accent="#a29bfe" title="Intelligent NLU" description="Natural language understanding handles diverse customer phrasings, accents, and queries without scripted responses or decision trees." />
             <FeatureCard emoji="🔒" accent="#00b894" title="Secure & Compliant" description="All calls are encrypted in transit. No customer data is stored without consent. GDPR and SOC 2 compliant infrastructure." />
             <FeatureCard emoji="📊" accent="#fdcb6e" title="Analytics Dashboard" description="Track call volumes, resolution rates, average handle time, and customer satisfaction scores across all interactions." />
             <FeatureCard emoji="🌍" accent="#e17055" title="24/7 Availability" description="No shift limits, no lunch breaks, no sick days. Your AI support agent is available around the clock across time zones." />
+=======
+            <FeatureCard icon={<Phone size={28} strokeWidth={1.5} style={{ color: '#6366f1' }} />} accent="#6366f1" title="Real Voice Calls" description="AI agent calls your customer's phone number directly. No apps, no browsers — just a natural phone conversation powered by Bolna AI." />
+            <FeatureCard icon={<Package size={28} strokeWidth={1.5} style={{ color: '#0ea5e9' }} />} accent="#0ea5e9" title="Live Order Tracking" description="The agent collects an order ID and instantly queries your database, delivering accurate status updates in real time during the call." />
+            <FeatureCard icon={<Brain size={28} strokeWidth={1.5} style={{ color: '#a78bfa' }} />} accent="#a78bfa" title="Intelligent NLU" description="Natural language understanding handles diverse customer phrasings, accents, and queries without scripted responses or decision trees." />
+            <FeatureCard icon={<Lock size={28} strokeWidth={1.5} style={{ color: '#10b981' }} />} accent="#10b981" title="Secure & Compliant" description="All calls are encrypted in transit. No customer data is stored without consent. GDPR and SOC 2 compliant infrastructure." />
+            <FeatureCard icon={<BarChart2 size={28} strokeWidth={1.5} style={{ color: '#f59e0b' }} />} accent="#f59e0b" title="Analytics Dashboard" description="Track call volumes, resolution rates, average handle time, and customer satisfaction scores across all interactions." />
+            <FeatureCard icon={<Globe size={28} strokeWidth={1.5} style={{ color: '#f97316' }} />} accent="#f97316" title="24/7 Availability" description="No shift limits, no lunch breaks, no sick days. Your AI support agent is available around the clock across time zones." />
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
           </div>
         </section>
 
@@ -171,16 +284,27 @@ export default function LandingPage() {
         <section style={{ padding: '88px 48px', background: 'rgba(20,26,42,0.3)', borderTop: '1px solid rgba(255,255,255,0.04)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
           <div style={{ maxWidth: 1100, margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: 60 }}>
+<<<<<<< HEAD
               <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#00D4FF', marginBottom: 16 }}>HOW IT WORKS</div>
               <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 900, letterSpacing: '-1.5px', margin: 0, background: 'linear-gradient(135deg, #f8fafc 30%, rgba(148,163,184,0.6))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+=======
+              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: PRIMARY, marginBottom: 16 }}>HOW IT WORKS</div>
+              <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 900, letterSpacing: '-1.5px', margin: 0, color: '#f8fafc' }}>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
                 From click to call in 3 steps
               </h2>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 24 }}>
               {[
+<<<<<<< HEAD
                 { step: '01', title: 'Enter your phone', desc: 'Provide your number on the call page. No account required.', color: '#6C5CE7' },
                 { step: '02', title: 'AI calls you', desc: 'Bolna AI initiates a real voice call to your number within seconds.', color: '#00D4FF' },
                 { step: '03', title: 'Get your answer', desc: 'The agent queries your order status and responds conversationally.', color: '#00b894' },
+=======
+                { step: '01', title: 'Enter your phone', desc: 'Provide your number on the call page. No account required.', color: PRIMARY },
+                { step: '02', title: 'AI calls you', desc: 'Bolna AI initiates a real voice call to your number within seconds.', color: '#0ea5e9' },
+                { step: '03', title: 'Get your answer', desc: 'The agent queries your order status and responds conversationally.', color: '#10b981' },
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
               ].map(({ step, title, desc, color }) => (
                 <div key={step} style={{ padding: '32px 28px', borderRadius: 18, background: 'rgba(20,26,42,0.6)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.06)' }}>
                   <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.1em', color, background: `${color}14`, padding: '4px 10px', borderRadius: 6, border: `1px solid ${color}28`, display: 'inline-block', marginBottom: 18 }}>STEP {step}</div>
@@ -197,10 +321,17 @@ export default function LandingPage() {
           <section style={{ padding: '88px 48px', maxWidth: 1100, margin: '0 auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 32 }}>
               <div>
+<<<<<<< HEAD
                 <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#6C5CE7', marginBottom: 10 }}>LIVE ACTIVITY</div>
                 <h2 style={{ fontSize: 28, fontWeight: 800, letterSpacing: '-1px', margin: 0, background: 'linear-gradient(135deg, #f8fafc 30%, rgba(148,163,184,0.6))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Recent Interactions</h2>
               </div>
               <Link href="/dashboard" style={{ fontSize: 13, color: '#6C5CE7', textDecoration: 'none', fontWeight: 600 }}>View all &rarr;</Link>
+=======
+                <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: PRIMARY, marginBottom: 10 }}>LIVE ACTIVITY</div>
+                <h2 style={{ fontSize: 28, fontWeight: 800, letterSpacing: '-1px', margin: 0, color: '#f8fafc' }}>Recent Interactions</h2>
+              </div>
+              <Link href="/dashboard" style={{ fontSize: 13, color: PRIMARY, textDecoration: 'none', fontWeight: 600 }}>View all &rarr;</Link>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
             </div>
             <div style={{ background: 'rgba(20,26,42,0.6)', borderRadius: 18, border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden', backdropFilter: 'blur(20px)' }}>
               <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', padding: '12px 24px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
@@ -228,6 +359,7 @@ export default function LandingPage() {
         )}
 
         {/* CTA */}
+<<<<<<< HEAD
         <section style={{ padding: '88px 48px', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.04)', background: 'linear-gradient(180deg, transparent, rgba(108,92,231,0.04))' }}>
           <h2 style={{ fontSize: 'clamp(28px, 5vw, 52px)', fontWeight: 900, letterSpacing: '-2px', margin: '0 0 20px', background: 'linear-gradient(135deg, #f8fafc 30%, rgba(148,163,184,0.7))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
             Ready to experience<br />
@@ -238,14 +370,31 @@ export default function LandingPage() {
             style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '18px 44px', borderRadius: 14, fontSize: 17, fontWeight: 800, background: 'linear-gradient(135deg, #6C5CE7, #00D4FF)', color: 'white', textDecoration: 'none', boxShadow: '0 0 60px rgba(108,92,231,0.5), 0 12px 48px rgba(0,0,0,0.3)' }}
             onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-2px)'; }}
             onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = 'none'; }}
+=======
+        <section style={{ padding: '88px 48px', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.02)' }}>
+          <h2 style={{ fontSize: 'clamp(28px, 5vw, 52px)', fontWeight: 900, letterSpacing: '-2px', margin: '0 0 20px', color: '#f8fafc' }}>
+            Ready to experience<br />
+            <span style={{ color: '#e2e8f0' }}>AI voice support?</span>
+          </h2>
+          <p style={{ fontSize: 18, color: 'rgba(148,163,184,0.55)', margin: '0 auto 44px', maxWidth: 460, lineHeight: 1.7 }}>Start a live call right now. No signup, no credit card.</p>
+          <Link href="/call"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '18px 44px', borderRadius: 14, fontSize: 17, fontWeight: 700, background: PRIMARY, color: 'white', textDecoration: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)'; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = 'none'; (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)'; }}
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
           >
             Start AI Call &rarr;
           </Link>
         </section>
 
         {/* Footer */}
+<<<<<<< HEAD
         <footer style={{ padding: '24px 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,0.04)', fontSize: 13, color: 'rgba(148,163,184,0.35)' }}>
           <span>CallFlow — Powered by <span style={{ color: '#6C5CE7' }}>Bolna AI</span></span>
+=======
+        <footer style={{ padding: '24px 48px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,0.06)', fontSize: 13, color: 'rgba(148,163,184,0.35)' }}>
+          <span>CallFlow — Powered by <span style={{ color: PRIMARY }}>Bolna AI</span></span>
+>>>>>>> 574b1d9171c8309919553197563cafc53c0bdabf
           <span>Next.js + Express + Supabase</span>
         </footer>
 
